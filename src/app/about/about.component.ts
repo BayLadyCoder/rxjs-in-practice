@@ -27,38 +27,48 @@ export class AboutComponent implements OnInit {
     // * Different types of Streams of data/value(s
 
     // This one can emits multiple values and never complete
-    document.addEventListener("click", (event) => {
-      console.log(event);
-    });
+    // document.addEventListener("click", (event) => {
+    //   console.log(event);
+    // });
 
     let counter = 0;
 
     // This one emits multiple values and never complete
-    setInterval(() => {
-      console.log(counter);
-      counter++;
-    }, 1000);
+    // setInterval(() => {
+    //   console.log(counter);
+    //   counter++;
+    // }, 1000);
 
     // This one emits value once and completes
-    setTimeout(() => {
-      console.log("finished...");
-    }, 3000);
+    // setTimeout(() => {
+    //   console.log("finished...");
+    // }, 3000);
 
     // * RxJs solves ways to Combine Streams to avoid callback hell
 
     // ! Example Problem
     // When a click event happens, wait 3 seconds to start logging counter (and increment counter by 1) on every second
-    document.addEventListener("click", (event) => {
-      console.log(event);
+    // document.addEventListener("click", (event) => {
+    //   console.log(event);
 
-      setTimeout(() => {
-        console.log("Started...");
+    //   setTimeout(() => {
+    //     console.log("Started...");
 
-        setInterval(() => {
-          console.log(counter);
-          counter++;
-        }, 1000);
-      }, 3000);
-    });
+    //     setInterval(() => {
+    //       console.log(counter);
+    //       counter++;
+    //     }, 1000);
+    //   }, 3000);
+    // });
+
+    // * RxJs Observables
+
+    // ! Add $ at the end of the variable name, to make this variable an observable
+    // We can hover over the variable to see the type of this variable
+
+    // * interval() emits stream of values on every n milliseconds
+    const interval$ = interval(1000);
+    interval$.subscribe((value) => console.log("stream interval 1 " + value));
+    interval$.subscribe((value) => console.log("stream interval 2 " + value));
   }
 }
