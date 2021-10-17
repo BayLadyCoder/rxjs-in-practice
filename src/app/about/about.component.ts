@@ -126,5 +126,12 @@ export class AboutComponent implements OnInit {
       (err) => console.log("error", err),
       () => console.log("Done!")
     );
+
+    // * Using noop for No Operation
+    http$.subscribe(
+      (data) => console.log("data", data),
+      noop, // noop stands for No Operation
+      () => console.log("Done!")
+    );
   }
 }
