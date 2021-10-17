@@ -64,6 +64,7 @@ export class AboutComponent implements OnInit {
     // * RxJs Observables
 
     // ! Add $ at the end of the variable name, to make this variable an observable
+    // ! An observable is a blueprint for a stream
     // We can hover over the variable to see the type of this variable
 
     // * interval() emits stream of values on every n milliseconds
@@ -78,5 +79,16 @@ export class AboutComponent implements OnInit {
     const timer$ = timer(5000, 1000);
     timer$.subscribe((value) => console.log("stream timer 1 " + value));
     timer$.subscribe((value) => console.log("stream timer 2 " + value));
+
+    // * Click Stream
+    // * fromEvent() returns an observable which is the definition of a stream, it's a blueprint of a stream
+    // first argument, source document or a specific button in the document is
+    // second argument, the event name that we want to subscribe
+    const click$ = fromEvent(document, "click");
+    click$.subscribe((event) => console.log(event));
+
+    // ! These (interval$, timer$ and click$) are jus definitions of the streams
+    // ! They are not the actual streams until it starts subscribe
+    // ! After we subscribe to it, then we start to get the values emitted by these observables
   }
 }
