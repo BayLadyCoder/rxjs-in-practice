@@ -96,11 +96,24 @@ export class AboutComponent implements OnInit {
     // 1st argument, next(value), is called when we receive a value from the stream
     // 2nd argument, error(err), is called when an error occurs, when this is called, the stream is closed
     // 3rd argument, complete(), is called when the stream finishes emitting values, when this is called, the stream is closed
-    const click2$ = fromEvent(document, "click");
-    click2$.subscribe(
-      (event) => console.log("click2$ value", event),
-      (err) => console.log("click2$ You got an error ", err),
-      () => console.log("click2$ completed")
+    // const click2$ = fromEvent(document, "click");
+    // click2$.subscribe(
+    //   (event) => console.log("click2$ value", event),
+    //   (err) => console.log("click2$ You got an error ", err),
+    //   () => console.log("click2$ completed")
+    // );
+
+    // * To unsubscribe an observable
+    // subscribe(), returns a subscription that contains unsubscribe() method that we can use when we want to unsubscribe to an observable
+    const click3$ = fromEvent(document, "click");
+    const subscription = click3$.subscribe(
+      (event) => console.log("click3$ value", event),
+      (err) => console.log("click3$ You got an error ", err),
+      () => console.log("click3$ completed")
     );
+
+    // unsubscribe to this observable after 5 seconds,
+    // this observable will stop emitting data after 5 seconds
+    setTimeout(() => subscription.unsubscribe(), 5000);
   }
 }
