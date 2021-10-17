@@ -131,15 +131,13 @@ export class AboutComponent implements OnInit {
     //   () => console.log("Done!")
     // );
     // * Create helper function, createMyHttpObservable, so we can reuse it to create new HTTP Observables
-    const http$ = createMyHttpObservable("/api/courses");
-
+    // const http$ = createMyHttpObservable("/api/courses");
     // * pipe() is allow us to chain multiple operators in order to produce a new observable
-    const courses$ = http$.pipe(map((response) => response["payload"]));
-
-    courses$.subscribe(
-      (data) => console.log("courses", data),
-      (err) => console.log("error", err),
-      () => console.log("Done!")
-    );
+    // const courses$ = http$.pipe(map((response) => response["payload"]));
+    // courses$.subscribe(
+    //   (data) => console.log("courses", data),
+    //   (err) => console.log("error", err),
+    //   () => console.log("Done!")
+    // );
   }
 }
