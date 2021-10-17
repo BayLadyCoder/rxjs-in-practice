@@ -43,5 +43,22 @@ export class AboutComponent implements OnInit {
     setTimeout(() => {
       console.log("finished...");
     }, 3000);
+
+    // * RxJs solves ways to Combine Streams to avoid callback hell
+
+    // ! Example Problem
+    // When a click event happens, wait 3 seconds to start logging counter (and increment counter by 1) on every second
+    document.addEventListener("click", (event) => {
+      console.log(event);
+
+      setTimeout(() => {
+        console.log("Started...");
+
+        setInterval(() => {
+          console.log(counter);
+          counter++;
+        }, 1000);
+      }, 3000);
+    });
   }
 }
