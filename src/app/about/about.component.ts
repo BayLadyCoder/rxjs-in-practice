@@ -15,7 +15,7 @@ import {
   ReplaySubject,
 } from "rxjs";
 import { delayWhen, filter, map, take, timeout } from "rxjs/operators";
-import { createHttpObservable } from "../common/util";
+import { createHttpObservable, createMyHttpObservable } from "../common/util";
 
 @Component({
   selector: "about",
@@ -102,35 +102,39 @@ export class AboutComponent implements OnInit {
     // * Create our own Observables
     // ! The Observer is what we use internally to implement the observable
     // ! The Observer functions, next(), error(), and complete(), will only be called when the observable is subscribed
-
     // * Create an HTTP Observable
-    const http$ = new Observable((observer) => {
-      // When this observable get subscribed, fetch the data from this endpoint
-      fetch("/api/courses")
-        .then((response) => response.json())
-        .then((body) => {
-          // if we get the data, pass data to next()
-          observer.next(body);
-          // then we complete this observable, no more data will be emitted from this observable
-          observer.complete();
-        })
-        .catch((err) => {
-          // if we get an error, we send the error to error(), and no value will be emitted from this observable
-          observer.error(err);
-        });
-    });
-
+    // const http$ = new Observable((observer) => {
+    //   // When this observable get subscribed, fetch the data from this endpoint
+    //   fetch("/api/courses")
+    //     .then((response) => response.json())
+    //     .then((body) => {
+    //       // if we get the data, pass data to next()
+    //       observer.next(body);
+    //       // then we complete this observable, no more data will be emitted from this observable
+    //       observer.complete();
+    //     })
+    //     .catch((err) => {
+    //       // if we get an error, we send the error to error(), and no value will be emitted from this observable
+    //       observer.error(err);
+    //     });
+    // });
     // * Subscribe to HTTP Observable
+    // http$.subscribe(
+    //   (data) => console.log("data", data),
+    //   (err) => console.log("error", err),
+    //   () => console.log("Done!")
+    // );
+    // * Using noop for No Operation
+    // http$.subscribe(
+    //   (data) => console.log("data", data),
+    //   noop, // noop stands for No Operation
+    //   () => console.log("Done!")
+    // );
+    // * Create helper function, createMyHttpObservable, so we can reuse it to create new HTTP Observables
+    const http$ = createMyHttpObservable("/api/courses");
     http$.subscribe(
       (data) => console.log("data", data),
       (err) => console.log("error", err),
-      () => console.log("Done!")
-    );
-
-    // * Using noop for No Operation
-    http$.subscribe(
-      (data) => console.log("data", data),
-      noop, // noop stands for No Operation
       () => console.log("Done!")
     );
   }
