@@ -20,11 +20,8 @@ import { Store } from "../common/store.service";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  //   beginnerCourses$: Observable<Course[]>;
-  //   advancedCourses$: Observable<Course[]>;
-
-  beginnerCourses: Course[];
-  advancedCourses: Course[];
+  beginnerCourses$: Observable<Course[]>;
+  advancedCourses$: Observable<Course[]>;
 
   constructor(private store: Store) {}
 
@@ -33,22 +30,25 @@ export class HomeComponent implements OnInit {
     // this.beginnerCourses$ = this.store.selectBeginnerCourses();
     // this.advancedCourses$ = this.store.selectAdvancedCourses();
 
-    // * Create helper function, createMyHttpObservable, so we can reuse it to create new HTTP Observables
     const http$ = createMyHttpObservable("/api/courses");
 
-    // * pipe() is allow us to chain multiple operators in order to produce a new observable
-    const courses$ = http$.pipe(map((response) => response["payload"]));
+    const courses$: Observable<Course[]> = http$.pipe(
+      map((response) => response["payload"])
+    );
+
+    this.beginnerCourses$ = courses$.pipe(
+      map((courses) =>
+        courses.filter((course) => course.category === "BEGINNER")
+      )
+    );
+    this.advancedCourses$ = courses$.pipe(
+      map((courses) =>
+        courses.filter((course) => course.category === "ADVANCED")
+      )
+    );
 
     courses$.subscribe(
-      (courses) => {
-        console.log("courses", courses);
-        this.beginnerCourses = courses.filter(
-          (course: Course) => course.category === "BEGINNER"
-        );
-        this.advancedCourses = courses.filter(
-          (course: Course) => course.category === "ADVANCED"
-        );
-      },
+      (courses) => console.log("courses", courses),
       (err) => console.log("error", err),
       () => console.log("Done!")
     );
