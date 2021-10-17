@@ -119,5 +119,12 @@ export class AboutComponent implements OnInit {
           observer.error(err);
         });
     });
+
+    // * Subscribe to HTTP Observable
+    http$.subscribe(
+      (data) => console.log("data", data),
+      (err) => console.log("error", err),
+      () => console.log("Done!")
+    );
   }
 }
