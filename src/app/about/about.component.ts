@@ -67,8 +67,16 @@ export class AboutComponent implements OnInit {
     // We can hover over the variable to see the type of this variable
 
     // * interval() emits stream of values on every n milliseconds
-    const interval$ = interval(1000);
-    interval$.subscribe((value) => console.log("stream interval 1 " + value));
-    interval$.subscribe((value) => console.log("stream interval 2 " + value));
+    // const interval$ = interval(1000);
+    // interval$.subscribe((value) => console.log("stream interval 1 " + value));
+    // interval$.subscribe((value) => console.log("stream interval 2 " + value));
+
+    // * timer() emits the first value after n milliseconds (first argument),
+    // * and emits more values on every n milliseconds from the second argument
+    // first argument is the wait time before it starts the first emission
+    // second argument is the time interval to emit values after the first emission
+    const timer$ = timer(5000, 1000);
+    timer$.subscribe((value) => console.log("stream timer 1 " + value));
+    timer$.subscribe((value) => console.log("stream timer 2 " + value));
   }
 }
